@@ -7,29 +7,23 @@ public class Order : MonoBehaviour
 {
     public TextMeshProUGUI cashRegisterText;
 
-    private GameObject[] orderArray;
     private bool hasEntered = false;
+
+    public delegate void CustomerEntryAction(GameObject[] orderArray);
+    public static event CustomerEntryAction OnEntry;
+    public static event CustomerEntryAction OnExit;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Customer" && !hasEntered)
         {
-            other.gameObject.tag = "CurrentCustomer";
             hasEntered = true;
+            other.gameObject.tag = "CurrentCustomer";
+            GameObject[] orderArray = other.gameObject.GetComponent<CustomerOrder>().orderArray; ;
 
-            if (other.gameObject.GetComponent<CustomerOrder>().orderArray == null)
+            if (orderArray != null)
             {
-                return;
-            }
-            else
-            {
-                orderArray = other.gameObject.GetComponent<CustomerOrder>().orderArray;
-
-            }
-
-            for (int i = 0; i < orderArray.Length; i++)
-            {
-                cashRegisterText.text += "\n" + orderArray[i].name;
+                OnEntry?.Invoke(orderArray);
             }
         }
     }
@@ -39,7 +33,7 @@ public class Order : MonoBehaviour
         if (other.gameObject.name == "Customer" && hasEntered)
         {
             hasEntered = false;
-            cashRegisterText.text = "";
+            OnExit?.Invoke(null);
         }
     }
 }

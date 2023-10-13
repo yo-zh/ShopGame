@@ -16,7 +16,17 @@ public class Order : MonoBehaviour
         {
             other.gameObject.tag = "CurrentCustomer";
             hasEntered = true;
-            orderArray = other.gameObject.GetComponent<CustomerOrder>().orderArray;
+
+            if (other.gameObject.GetComponent<CustomerOrder>().orderArray == null)
+            {
+                return;
+            }
+            else
+            {
+                orderArray = other.gameObject.GetComponent<CustomerOrder>().orderArray;
+
+            }
+
             for (int i = 0; i < orderArray.Length; i++)
             {
                 cashRegisterText.text += "\n" + orderArray[i].name;

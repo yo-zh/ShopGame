@@ -11,17 +11,17 @@ public class OrderScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        Order.OnEntry += updateScreen;
-        Order.OnExit += updateScreen;
+        Order.OnEntry += UpdateScreen;
+        Order.OnExit += UpdateScreen;
     }
 
     private void OnDisable()
     {
-        Order.OnEntry -= updateScreen;
-        Order.OnExit -= updateScreen;
+        Order.OnEntry -= UpdateScreen;
+        Order.OnExit -= UpdateScreen;
     }
 
-    void updateScreen(GameObject[] orderArray)
+    void UpdateScreen(GameObject[] orderArray)
     {
         if (orderArray != null)
         {
@@ -34,6 +34,6 @@ public class OrderScreen : MonoBehaviour
         {
             cashRegisterText.text = string.Empty;
         }
-       
+
     }
 }

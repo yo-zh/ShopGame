@@ -9,20 +9,20 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
-        spawnCustomerPrefab();
+        UpdateScreen();
     }
 
     private void OnEnable()
     {
-        DestroyCustomer.OnDestroy += spawnCustomerPrefab;
+        DestroyCustomer.OnDestroy += UpdateScreen;
     }
 
     private void OnDisable()
     {
-        DestroyCustomer.OnDestroy -= spawnCustomerPrefab;
+        DestroyCustomer.OnDestroy -= UpdateScreen;
     }
 
-    public void spawnCustomerPrefab()
+    public void UpdateScreen()
     {
         GameObject currentCustomer = Instantiate(customer, transform.position, Quaternion.identity);
         currentCustomer.name = currentCustomer.name.Replace("(Clone)", "");

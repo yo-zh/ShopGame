@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SellProducts : MonoBehaviour
@@ -57,5 +58,19 @@ public class SellProducts : MonoBehaviour
             }
         }
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (orderList.Contains(other.gameObject.name))
+        {
+            orderList.Remove(other.gameObject.name);
+            Destroy(other.gameObject);
+        }
+        if (orderList.Count == 0)
+        {
+            GameObject customer = GameObject.FindGameObjectWithTag("CurrentCustomer"); // Not great, better get the reference instead of "Find"
+            Destroy(customer.GetComponent<CustomerOrder>());
+        }
     }
 }

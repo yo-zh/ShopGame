@@ -37,7 +37,7 @@ public class SellProducts : MonoBehaviour
         }
         if (orderList.Count == 0)
         {
-            GameObject customer = GameObject.FindGameObjectWithTag("CurrentCustomer"); // Not great, better get the reference instead of "Find"
+            GameObject customer = GameObject.FindGameObjectWithTag("CurrentCustomer"); // Not great, needs rework
             Destroy(customer.GetComponent<CustomerOrder>());
         }
     }

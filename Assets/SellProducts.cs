@@ -1,10 +1,12 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SellProducts : MonoBehaviour
 {
     private List<string> orderList = new();
+
+    public delegate void PerformTransaction();
+    public static event PerformTransaction Sold;
 
     private void OnEnable()
     {
@@ -25,7 +27,7 @@ public class SellProducts : MonoBehaviour
                 orderList.Add(order.name);
             }
         }
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +40,8 @@ public class SellProducts : MonoBehaviour
         if (orderList.Count == 0)
         {
             GameObject customer = GameObject.FindGameObjectWithTag("CurrentCustomer"); // Not great, needs rework
-            Destroy(customer.GetComponent<CustomerOrder>());
+            Destroy(customer.GetComponent<CustomerOrder>());                           //
+            Sold.Invoke();
         }
     }
 }

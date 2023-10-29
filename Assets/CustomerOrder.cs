@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class CustomerOrder : MonoBehaviour
 {
+    public delegate void CustomerPayment(int Money);
+    public static event CustomerPayment Paid;
+
     [SerializeField] GameObject[] prefabArray;
     public GameObject[] orderArray;
-    private int Money;
+    [SerializeField] int Money;
 
     void Start()
     {
@@ -28,6 +31,6 @@ public class CustomerOrder : MonoBehaviour
 
     private void GiveMoney()
     {
-        Debug.Log("I don't have any money, but thanks for the goods anyway"); // Prints text several times for some reason
+        Paid?.Invoke(Money);
     }
 }
